@@ -1,0 +1,18 @@
+<html>
+<head>
+<title>zzz</title>
+</head>
+<body>
+<pre>
+.First.lib <-function(lib,pkg)
+{
+ver <- read.dcf(file.path(lib, pkg, "DESCRIPTION"), "Version")
+     ver <- as.character(ver)	
+
+cat("roots", ver, "loaded\n")
+}
+</pre>
+</BODY>
+
+</HTML>
+ 

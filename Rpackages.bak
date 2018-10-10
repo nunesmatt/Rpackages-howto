@@ -1,0 +1,550 @@
+<html>
+<head>
+<a name="top"></a>
+<link rel= stylesheet type="text/css" href="../../style.css" media="screen">
+
+<title>Creating R packages</title>
+<style>
+a:link{color:teal}
+a:visited{color:teal}
+a:hover{color:lightblue}
+</style>
+<style>
+tt{color:silver}
+</style>
+
+</head>
+<body bgcolor="003700" text="gray" link="silver" vlink="silver">
+<BR>
+<FONT FACE="Arial, Helvetica, Sans Serif" COLOR="gray">
+<FONT COLOR="#A52A2A">
+<h1>Creating R Packages (the idiot's guide)...</h1></font>
+<BR>
+
+&nbsp&nbsp<FONT FACE="Times New Roman, Times, Serif" COLOR="0099CC">You are here: </FONT>&nbsp
+<a class="yah" href="../../Welcome.html">Home</a>
+<FONT COLOR="#FF0000">&#149</FONT>
+<a class="yah" href="../../computerstuff.html">computer stuff</a>
+<FONT COLOR="#FF0000">&#149</FONT>
+<a class="yah" href="../../computerhelp.html">computer help</a>
+<FONT COLOR="#FF0000">&#149</FONT>
+<a class="yah" href="../Rhelp.html">R help</a>
+<FONT COLOR="#FF0000">&#149</FONT>
+<FONT FACE="Courier New, Courier", color="orange">R packages</FONT>
+
+<br><br>
+<P  align="right">
+<font color="orange">&#149</font>
+<i><font color="0099CC">Last Updated: 10/03/06</font></i>
+<font color="orange">&#149</font>&nbsp&nbsp</P>
+<blockquote>
+
+
+<a href="http://www.maths.bris.ac.uk/~db0797">Dan Bailey</a> and I have spent a while <i><b>banging our heads against the R extensions brick wall</b></i>.  After trawling through the various manuals, forums and websites giving help on making R packages, and still having some trouble understanding how to successfully create R extensions, we have decided to set out our own instructions, in the hope that people (of the not computer-minded variety) will be able to ignore all the confusing stuff which generally accompanies R help.<br><br>
+
+Please note that this information is mainly gleaned from a couple of useful websites, pointed to in what follows, and our experiences.  We hope to add our own examples shortly to clarify things further.  I try to update it when new information comes to me, mainly on the troubleshooting side of things.  <a href="#Thanks">Thanks</a> to all who have helped constructing this page.  If you still have problems after this, then may God spare your sanity.  Please feel free to <a href="http://www.maths.bris.ac.uk/~maman/FormEmail/FormEmail.html">email me</a>, though.  Good luck.<BR><BR><BR>
+
+<p align="center"><font color="A52A2A" size="+2">---Installing R packages--- </font></P>
+
+<font color="3399CC">
+If you already have an R package, and just want to install it, use the links below and follow steps 1,7,8 (Linux-Linux) for Linux [.tar] packages, or step 6 (Windows-Windows) for windows [.zip] R packages. <br><br><BR>
+</font>
+
+<p align="center"><font color="A52A2A" size="+2">---Creating and installing R packages from scratch---</font></P>
+The instructions below come in a few different flavours.  Building packages in...<br><br>
+
+<center>
+<table cellspacing="5" cellpadding="10">
+<tr>
+<td><font color="orange">&#149</font></td>
+<td><a href="#Lin-Lin"><b> Linux for use in R for Linux</b></a></td>
+<td><font color="orange">&#149</font></td>
+<td><a href="#Lin-Win"><b>Linux for use in R for Windows</b></a></td>
+<td><font color="orange">&#149</font></td>
+<td><a href="#Win-Win"><b>Windows for use in R for Windows</b></a></td>
+<td><font color="orange">&#149</font></td>
+<td><a href="#Win-Lin"><b>Windows for use in R for Linux</b></a></td>
+<td><font color="orange">&#149</font></td>
+<td><a href="#Mac"><b>Mac OS</b></a></td>
+<td><font color="orange">&#149</font></td>
+</tr>
+</table>
+</center>
+
+<BR><BR>
+
+Other stuff:<br><br>
+
+<center>
+<table cellspacing="5" cellpadding="10">
+<tr>
+<td><font color="orange">&#149</font></td>
+<td><a href="#output"><b>Sample Windows build output</b></a></td>
+<td><font color="orange">&#149</font></td>
+<td><a href="#Win-trb"><b>Troubleshooting</b></a></td>
+<td><font color="orange">&#149</font></td>
+</tr>
+</table>
+</center>
+
+<BR><BR><BR><BR>
+
+<a name="Lin-Lin"></a>
+
+<FONT COLOR="A52A2A">
+<font size="+3">
+Linux-Linux</font size> &nbsp <font size="+1"><A HREF="#top">[top]</a></font>
+<BR><BR><BR>
+
+This is mainly <i>skinned</i> from the tutorial by <a href="http://web.maths.unsw.edu.au/~wand/webcpdg/rpack.html">Wand and Nott</a>.  Use the files linked to their website for an example.<br><br>
+
+Or for the lazy, the links are here:<br><br>
+</FONT>
+
+<a href="http://web.maths.unsw.edu.au/~wand/webcpdg/cuberoot.r">[cuberoot.r]</a>&nbsp&nbsp
+<a href="http://web.maths.unsw.edu.au/~wand/webcpdg/fourthroot.r">[fourthroot.r]</a>&nbsp&nbsp
+<a href="http://web.maths.unsw.edu.au/~wand/webcpdg/fifthroot.r">[fifthroot.r]</a>&nbsp&nbsp
+<a href="http://web.maths.unsw.edu.au/~wand/webcpdg/firstlib.r">[firstlib.r]</a>&nbsp&nbsp
+<a href="http://web.maths.unsw.edu.au/~wand/webcpdg/fthrt.f">[fthrt.f]</a>&nbsp&nbsp
+<a href="http://web.maths.unsw.edu.au/~wand/webcpdg/fifrt.c">[fifrt.c]</a>&nbsp&nbsp
+<a href="http://web.maths.unsw.edu.au/~wand/webcpdg/table.of.roots.txt">[table.of.roots.txt]</a>&nbsp&nbsp
+<a href="http://web.maths.unsw.edu.au/~wand/webcpdg/cuberoot.rd">[cuberoot.rd]</a>&nbsp&nbsp
+<a href="http://web.maths.unsw.edu.au/~wand/webcpdg/fourthroot.rd">[fourthroot.rd]</a>&nbsp&nbsp
+<a href="http://web.maths.unsw.edu.au/~wand/webcpdg/fifthroot.rd">[fifthroot.rd]</a>&nbsp&nbsp
+<a href="http://web.maths.unsw.edu.au/~wand/webcpdg/table.of.roots.rd">[table.of.roots.rd]</a>&nbsp&nbsp
+<a href="http://web.maths.unsw.edu.au/~wand/webcpdg/DESCRIPTION">[DESCRIPTION]</a>
+
+<br><br>
+
+You may also want the following file (see step 8):<BR><BR>
+
+<a href="zzz.html">[zzz.r]</a><BR><BR>
+
+1.  In a Linux command window, use <tt>cd</tt> and then <tt>pwd</tt> to find out your home filespace.  This should be something like <tt>/c/userid</tt> or <tt>/home/maman</tt>.  Then create two directories, named <tt>myrlibrary</tt> and <tt>myrpackages</tt> (eg <tt>mkdir myrpackages</tt>).  <tt>myrpackages</tt> will contain the source files of your package, while <tt>myrlibrary</tt> will be where the package is built.  Then using an text editor (vi, emacs etc) create a file named <tt>.Rprofile</tt> which contains the single line <i>.libPaths("/home/maman/myrlibrary")</i>. This says "<i>/home/maman/myrlibrary</i> is where my packages will be".<br><br>
+
+2.  Go to your packages directory (<tt>cd myrpackages</tt>), and create a directory for your package (eg <tt>mkdir roots</tt>).  If necessary, change the permissions of this directory to <tt>drwx r-x r-x</tt>.  This is so that the directory is accessible: <tt>chmod 755 roots</tt>.  This is equivalent to <tt>chmod go+rx roots</tt> if the user already have permissions <a href="../permissions.html">[file permissions help]</a>.  Use <tt>ll</tt> to check the permissions.  Create 2 directories called <tt>man</tt> and <tt>R</tt>.  The <tt>man</tt> directory will contain your R (.Rd) help files, and the <tt>R</tt> directory will contain the code files for your R functions (generally .R). <br><br>
+
+If you also have datasets, create a directory in <tt>roots</tt> called <tt>data</tt> to put them in.<br><br>
+
+If you also have compiled code files (c or fortran files), create another directory in <tt>roots</tt> named <tt>src</tt> to put them in.<br><br>
+
+Change the permissions (if necessary) of all created directories in <tt>roots</tt> to <tt>rwx r-x r-x</tt> (<tt>chmod 755 *</tt>).<br><br>
+
+3.  go to the <tt>man</tt> directory, and create a .Rd file for each of your functions or datasets in the package (R code, C code and Fortran code).  Here are some tips for writing <a href="Rdfiles.html">R documentation files</a>. <br><br>
+
+Put the datasets, R code and compiled code in the relevant directories.<br><br>
+
+<font color="orange">If you have C or Fortran code files</font> (<tt>.c</tt> or <tt>.f</tt> files), add the file <a href="http://web.maths.unsw.edu.au/~wand/webcpdg/firstlib.r"><tt>firstlib.R</tt></a> to your <tt>roots/R</tt> directory.  Edit the code to have the name of your package instead of "roots".  This file tells R to load in the compiled code contained in the <tt>src</tt> directory.<br><br>
+
+4.  Go into each of the directories <tt>R</tt>, <tt>man</tt> (and <tt>data</tt> and <tt>src</tt> if you have them) in turn, and make sure that all the files in them are readable, by using <tt>chmod 644 *</tt>.<br><br> 
+
+5.  Go to the main <tt>roots</tt> directory and create a file called <tt>DESCRIPTION</tt>.  The <a href="http://cran.r-project.org/doc/manuals/R-exts.pdf">R extensions manual</a> has good information on the layout of this file.  Note that the first line (<i>package</i>) must have the same name as the package directory (eg. <tt>roots</tt>).  Change the permissions of this file to readable: <tt>chmod 644 DESCRIPTION</tt>.  Now the structure of the package is done.<br><br>
+
+6.  Build the package.  Go to the <tt>myrpackages</tt> directory and do <tt>R CMD build roots</tt>.  This should go through <a href="#output">some crap</a> and then create a zipped file of your package <tt>roots_0.1-1.tar.gz</tt> in your <tt>myrpackages</tt> directory.  Note that the underscored number will match whatever you put in the <i>Version</i> line of your <tt>DESCRIPTION</tt> file.  This comes in handy if you want to make changes to your files or add extra functions etc, so you can keep track of what you are doing and how each version changes.  You have now (hopefully successfully) created an R package.  You can also use <tt> R CMD CHECK roots</tt> to locate any problems in the package structure.<br><br>
+
+7.  To install the package, go into the <tt>myrpackages</tt> directory (where your package is) and type <tt>R CMD INSTALL -l /home/maman/myrlibrary roots_0.1-1.tar.gz</tt> (replacing roots with your package name to install a different package).  By the way, that's the letter <tt>l</tt>, not the number <tt>1</tt>.  This says, "install my wonderful new package in my <tt>myrlibrary</tt> directory".  You can check the <tt>DESCRIPTION</tt> file in the <tt>/myrlibrary/roots</tt> directory for a <i>Built</i> line to see if it has installed properly.<br><br>
+
+<blockquote>
+<font color=3399CC>Tip: If, like me, you are constantly changing your code and building different package versions, you can install packages "tidily" by using the install command <tt>R CMD INSTALL --with-package-versions -l /home/maman/myrlibrary roots_0.1-1.tar.gz</tt>.  This will install the package as <tt>/myrlibrary/roots_0.1-1</tt>, and has the effect that you can load packages by version with e.g. <tt>library(roots, version="0.1-1")</tt>.<br><br>
+Note:  If you do this, then a simple <tt>library(roots)</tt> command will load the <font color="orange"><i>latest</i></font> package version.  However, BEWARE of doing a mixture of installing <tt>--with-package-versions</tt> and not; if you do, a simple <tt>library(roots)</tt> command will load the package without a version number.</font><BR><BR>   
+</blockquote>
+
+
+8.  To see if the package works, start R from whichever directory you want, and type <tt>library(roots)</tt>.  A sometimes useful addition to the package structure is to add the file <a href="zzz.html">zzz.r</a> (above) to your package subdirectory <tt>R</tt>.  This prints a message to tell you when your package has loaded.  Then test out your functions, eg. <tt>fifthroot(32)</tt>.<br><br><br>
+
+<a name="Lin-Win"></a>
+
+<font color="A52A2A">
+
+<font size="+3">Linux-Windows</font size> &nbsp <font size="+1"><A HREF="#top">[top]</a></font></font>
+<BR><BR><BR>
+
+<font color ="orange">If you DO NOT have C or Fortran files</font>, the easy way of doing this is follow the instructions above for <a href="#Lin-Lin">Linux</a> packages, and then simply copy the built package directory <tt>roots</tt> (from the <tt>myrlibrary</tt> directory) into Windows somewhere.  Then zip it (we recommend using <a href="http://www.winzip.com">Winzip</a>) as a <tt>.zip</tt> file.  This can then be installed into R by using the <I>Packages -> Install package(s) from local .zip files</I> tab.  <tt>library(roots)</tt> will make the package available in the workspace as usual.  <font color="orange">Note the <tt>library(roots)</tt> step of this will NOT work for packages with compiled code in it.</font><br><br>  
+
+<font color ="orange">If you do have compiled code files</font>, then you can copy the <i>unbuilt</i> folder <tt>roots</tt> to somewhere in Windows, and then build it from there using the command prompt (see no. 5 in instructions for <a href="#Win-Win">Windows</a> below).  For this you will need to download and install the tools (cygwin), Perl and mingwin, so this is in fact virtually identical to following the Windows instructions (you will need to do all except no. 3).<br><br> 
+
+If you can't get these tools, or can't get them to work (more likely) then there are some instructions on <a href="http://cran.r-project.org/doc/contrib/cross-build.pdf">cross-compiling R packages for Windows in Linux</a>.  We have so far failed to get this working (maybe due to the system we are using), but hope to sometime in the future.  Sorry if this is no use to you. <br><br> <BR>
+
+<a name="Win-Win"></a>
+
+<font color ="A52A2A">
+
+<font size="+3">Windows-Windows</font size> &nbsp <font size="+1"><A HREF="#top">[top]</a></font>
+<BR><BR><BR>
+
+N.B. This advice works for our Windows 2000 PCs.  If anybody has followed the more recent "Writing R packages" and had success and would like to contribute to this page, please <a href="http://www.maths.bris.ac.uk/~maman/FormEmail/FormEmail.html">email me</a>.  See the <a href="#Win-trb">troubleshooting</a> for solutions to some problems which you may encounter on different Windows versions.
+</font>
+<BR><BR>
+You may have problems with this...<br><br>
+
+1.  Download Perl, cygwin and mingwin from Brian Ripley's <a href="http://www.murdoch-sutherland.com/Rtools/">tools page</a>.  There are a lot of different versions of mingwin etc, so if you don't want to muck about figuring out which to use, here are the versions of these tools which we have used (which work) <br><br>
+<center>
+<a href="ActivePerl-5.8.3.809-MSWin32-x86.msi">[Perl]</a> &nbsp &nbsp
+<a href="cygwin.zip">[cygwin (=tools)]</a> &nbsp &nbsp
+<a href="MinGW-1.1.tar.gz">[mingwin]</a> &nbsp &nbsp
+<a href="hhc.exe">[hhc.exe]</a> <br><br>
+</center>
+<br><BR>
+
+You should unzip the tools into <tt>C:\cygwin</tt>, and the compressed mingwin into <tt>C:\mingwin</tt>.  Perl should be put in <tt>C:\Perl</tt>.  The hcc.exe file is to create the <tt>.chm</tt> help files for your package.  This file should go in <tt>C:\cygwin</tt>.  You may also want to download the latest version of <a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/htmlhelp/html/hwMicrosoftHTMLHelpDownloads.asp"> html help workshop</a>, which you can also find <a href="htmlhelp.exe">here</a>.  (I recommend it, just to ensure that you have all the relevant files - basically you need hha.dll somewhere on your computer).  <br><br>
+
+2.  Put the programs in your path.  In Windows, go to <i>(Start->Settings->)Control Panel->System->Advanced</i>.  Click on the <i>Environment Variables</i> button, which should be in the middle.  In the lower list of variables, there should be one called <i>Path</i>.  Press edit (on the lower set of buttons) and add the locations of the three new programs.  There is a bit of confusion as to the whether the order in which they come matters, but we suggest <br><br> 
+
+<tt> C:\Perl\bin\;C:\cygwin;[other stuff - DO NOT REMOVE];C:\mingwin\bin</tt><br><br>
+
+<font color="orange">Important: The Path should not have any spaces in between entries (after semi-colons)</font>.<br><br>
+
+Note:  Perl has a setup program, so will probably add itself to the Path automatically, so check what it's done before you add Perl to the Path.<br><br> 
+
+3.  Create the package directories somewhere as in the <a href="#Lin-Lin">Linux</a> instructions 2-5 (the file permissions will be automatic).<br><br>
+<blockquote>
+<font color=3399CC>Tip: You can create a package skeleton in R, by sourcing your functions/code into the workspace and then using the command <tt>package.skeleton(name="roots",list=ls())</tt>.  Then edit the <tt>DESCRIPTION</tt> file and <tt>.Rd</tt> files appropriately.</font> <br><br>
+</blockquote>
+4.  Open a command prompt (<i>Start->Programs->Accessories->Command Prompt</i>).  Change directory to your version of R: (normally eg <tt>cd \Program Files\R\rw1090\bin</tt>.  <br><br>  The R directory should include the <i>Source Package Installation Files</I>, by which I mean the <tt>bin</tt> directory should have the files <tt>build</tt>, <tt>check</tt> and <tt>Rcmd</tt>.  If not, then reinstall R with the <i>source installation files</i> box checked.<br><br>
+
+5.  Now build the package: <tt>Rcmd build --force --binary <i>packagelocation</i></tt> eg. <tt>Rcmd build --force --binary C:\temp\roots</tt>.  Note that this is slightly different to the Linux command <tt>R CMD</tt>.  I recommend having your package in a directory path without spaces (i.e. preferably not in a subdirectory of <i>C:\ Program Files</i>, since it tends to create problems (especially with checking) if you can't describe the path implicitly through parent directories eg <i>..\ ..\ package</i>).  It is often useful just to put the package directory in the <tt>bin</tt> directory to avoid writing the location altogether.  Then the command would be <tt>Rcmd build package</tt>.  This should go through <a href="#output">some crap</a> and then create a .zip file of the package. <br><br>
+<blockquote>
+<font color=3399CC>Tip: It is worth issuing the command <tt>Rcmd check package</tt> before building it, especially if your package is large or contains code from various sources, so that any problems in code, examples, help files etc can be located prior to distributing the package.  I think this also is responsible for building/updating the html versions of the help files.</font><br><br>
+</blockquote>
+6.  Install the package in R in the usual way: <I>Packages -> Install package(s) from local .zip files</I>, then <tt>library(roots)</tt>.  Note that the .zip file will be contained in the R bin location <tt>C:\Program Files\R\rw1090\bin</tt>.<br><br><br>
+
+<a name="Win-Lin">
+
+<font color="A52A2A">
+
+<font size="+3">Windows-Linux</font size> &nbsp <font size="+1"><A HREF="#top">[top]</a></font>
+</font>
+<BR><BR><BR>
+
+1.  Follow the instructions 1-4 <a href="#Win-Win">above</a>.  <br><br>
+
+2.  Build the package into a tar file: From the R <tt>bin</tt> directory, type <tt>Rcmd build <i>packagelocation</i></tt>, eg. <tt>Rcmd build C:\temp\roots</tt>, or <tt>Rcmd build roots</tt> if you have put the package directory in the R <tt>bin</tt> directory.<br><br>
+
+3.  In your Linux account, perform instruction 1 from the <a href="#Lin-Lin">Linux</a> section of this page.  Copy the newly created <i>.tar.gz</I> file from Windows (<tt>C:\Program Files\R\rw1090\bin</tt>) to the <tt>\myrpackages</tt> directory in your Linux filespace.<br><br>
+
+4.  Install the package: Follow instruction 7 in the <a href="#Lin-Lin">Linux</a> instructions.<br><br><br>
+
+<a name="Mac"></a>
+
+<font color="A52A2A">
+
+<font size="+3">MacOS</font size> &nbsp <font size="+1"><A HREF="#top">[top]</a></font>
+<BR><BR><br>
+</font>
+I do not have any experience with Macs at all, and so have not used R on a Mac.  However, I am reliably informed that there is a guide out there for building R packages for Mac users:<br><br>
+
+<a href="http://personality-project.org/r/makingpackages">Creating R packages on a Mac</a><br><br><br>
+
+<font color="A52A2A">
+<a name="output"></a>
+<font size="+3">Windows build output</font size> &nbsp <font size="+1"><A HREF="#top">[top]</a></font>
+<BR><BR>
+</font>
+I thought that it would be helpful if I gave what my computer says when doing an <tt>Rcmd check</tt>, <tt>Rcmd build</tt> or <tt>Rcmd build --force --binary</tt>.  This output will probably change slightly, depending on which version of R you use. <br><BR>
+
+
+<tt>
+C:\removethis\R-2.2.1\bin>Rcmd check C:/removethis/rw1090/roots<BR><BR>
+<blockquote>
+* checking for working latex ... OK<BR>
+* using log directory 'C:/removethis/R-2.2.1/bin/roots.Rcheck'<BR>
+* using R version 2.2.1, 2005-12-20<BR>
+* checking for file 'roots/DESCRIPTION' ... OK<BR>
+* this is package 'roots' version '0.1-3'<BR>
+* checking if this is a source package ... OK<BR><BR>
+
+installing R.css in C:/removethis/R-2.2.1/bin/roots.Rcheck<BR><BR><BR>
+
+
+---------- Making package roots ------------<BR>
+  adding build stamp to DESCRIPTION<BR>
+  making DLL ...<BR>
+making fifrt.d from fifrt.c<BR>
+gcc   -Ic:/removethis/R-2.2.1/include -Wall -O2   -c fifrt.c -o fifrt.o<BR>
+g77 -O2 -Wall   -c fthrt.f -o fthrt.o<BR>
+ar cr roots.a fifrt.o fthrt.o<BR>
+ranlib roots.a<BR>
+windres --include-dir c:/removethis/R-2.2.1/include  -i roots_res.rc -o roots_re<BR>
+s.o<BR>
+gcc  --shared -s  -o roots.dll roots.def roots.a roots_res.o  -Lc:/removethis/R-<BR>
+2.2.1/src/gnuwin32   -lg2c -lR<BR>
+  ... DLL made<BR>
+  installing DLL<BR>
+  installing R files<BR>
+  installing data files<BR>
+  installing man source files<BR>
+  installing indices<BR>
+  not zipping data<BR>
+  installing help<BR>
+ >>> Building/Updating help pages for package 'roots'<BR>
+     Formats: text html latex example chm<BR>
+  cuberoot                          text    html    latex   example<BR>
+  fifthroot                         text    html    latex   example<BR>
+  fourthroot                        text    html    latex   example<BR>
+  table.of.roots                    text    html    latex<BR>
+Microsoft HTML Help Compiler 4.74.8702<BR>
+<BR>
+Compiling c:\removethis\rw1090\roots\chm\roots.chm<BR>
+<BR>
+<BR>
+Compile time: 0 minutes, 0 seconds<BR>
+5       Topics<BR>
+16      Local links<BR>
+0       Internet links<BR>
+1       Graphic<BR>
+<BR>
+<BR>
+Created c:\removethis\rw1090\roots\chm\roots.chm, 16,409 bytes<BR>
+Compression increased file by 4,371 bytes.<BR>
+  adding MD5 sums<BR>
+<BR>
+* DONE (roots)<BR>
+<BR>
+* checking package directory ... OK<BR>
+* checking for portable file names ... OK<BR>
+* checking DESCRIPTION meta-information ... OK<BR>
+* checking package dependencies ... OK<BR>
+* checking index information ... OK<BR>
+* checking package subdirectories ... OK<BR>
+* checking R files for syntax errors ... OK<BR>
+* checking R files for library.dynam ... OK<BR>
+* checking S3 generic/method consistency ... OK<BR>
+* checking replacement functions ... OK<BR>
+* checking foreign function calls ... OK<BR>
+* checking Rd files ... OK<BR>
+* checking for missing documentation entries ... OK<BR>
+* checking for code/documentation mismatches ... OK<BR>
+* checking Rd \usage sections ... OK<BR>
+* checking for CRLF line endings in C/C++/Fortran sources/headers ... OK<BR>
+* creating roots-Ex.R ... OK<BR>
+* checking examples ... OK<BR>
+* creating roots-manual.tex ... OK<BR>
+* checking roots-manual.tex ... OK<BR>
+<BR>
+<BR>
+
+</blockquote>
+</tt>
+===============================<br><BR>
+<tt>
+C:\removethis\R-2.2.1\bin>Rcmd build C:/removethis/rw1090/roots<BR><br>
+
+<blockquote>
+
+* checking for file 'C:/removethis/rw1090/roots/DESCRIPTION' ... OK<BR>
+* preparing 'C:/removethis/rw1090/roots':<BR>
+* checking DESCRIPTION meta-information ... OK<BR>
+* cleaning src<BR>
+* removing junk files<BR>
+* checking for LF line-endings in source files<BR>
+* checking for empty directories<BR>
+* building 'roots_0.1-3.tar.gz'<BR>
+<BR>
+<BR>
+
+</blockquote>
+</tt>
+===============================<br><BR>
+<tt>
+
+C:\removethis\R-2.2.1\bin>Rcmd build --force --binary C:/removethis/rw1090/roots<BR>
+<BR>
+<blockquote>
+
+* checking for file 'C:/removethis/rw1090/roots/DESCRIPTION' ... OK<BR>
+* preparing 'C:/removethis/rw1090/roots':<BR>
+* checking DESCRIPTION meta-information ... OK<BR>
+* cleaning src<BR>
+* removing junk files<BR>
+* checking for LF line-endings in source files<BR>
+* checking for empty directories<BR>
+* building binary distribution<BR>
+ WARNING<BR>
+* some HTML links may not be found<BR>
+<BR>
+Using auto-selected zip options ''<BR>
+<BR>
+---------- Making package roots ------------<BR>
+  adding build stamp to DESCRIPTION<BR>
+  making DLL ...<BR>
+making fifrt.d from fifrt.c<BR>
+gcc   -Ic:/removethis/R-2.2.1/include -Wall -O2   -c fifrt.c -o fifrt.o<BR>
+g77 -O2 -Wall   -c fthrt.f -o fthrt.o<BR>
+ar cr roots.a fifrt.o fthrt.o<BR>
+ranlib roots.a<BR>
+windres --include-dir c:/removethis/R-2.2.1/include  -i roots_res.rc -o roots_re<BR>
+s.o<BR>
+gcc  --shared -s  -o roots.dll roots.def roots.a roots_res.o  -Lc:/removethis/R-<BR>
+2.2.1/src/gnuwin32   -lg2c -lR<BR>
+  ... DLL made<BR>
+  installing DLL<BR>
+  installing R files<BR>
+  installing data files<BR>
+  installing man source files<BR>
+  installing indices<BR>
+  not zipping data<BR>
+  installing help<BR>
+ >>> Building/Updating help pages for package 'roots'<BR>
+     Formats: text html latex example chm<BR>
+  cuberoot                          text    html    latex   example chm<BR>
+  fifthroot                         text    html    latex   example chm<BR>
+  fourthroot                        text    html    latex   example chm<BR>
+  table.of.roots                    text    html    latex           chm<BR>
+Microsoft HTML Help Compiler 4.74.8702<BR>
+<BR>
+Compiling c:\TEMP\Rbuild.1320\roots\chm\roots.chm<BR>
+<BR>
+<BR>
+Compile time: 0 minutes, 0 seconds<BR>
+5       Topics<BR>
+16      Local links<BR>
+0       Internet links<BR>
+1       Graphic<BR>
+<BR>
+<BR>
+Created c:\TEMP\Rbuild.1320\roots\chm\roots.chm, 16,405 bytes<BR>
+Compression increased file by 4,367 bytes.<BR>
+  adding MD5 sums<BR>
+<BR>
+packaged installation of package 'roots' as roots_0.1-3.zip<BR>
+* DONE (roots)<BR>
+
+
+</blockquote>
+</tt>
+
+<br><BR><BR>
+<a name="Win-trb"></a>
+
+<font color="A52A2A">
+
+<font size="+3">Windows building troubleshooting</font size> &nbsp <font size="+1"><A HREF="#top">[top]</a></font>
+<BR><BR>
+(A few problems you may experience and <i>possible</i> solutions)
+</font>
+<br><br><br>
+<B>--1--</B><BR>
+<u>Problem</u>:  <tt>Error: [something eg sh] is not an internal or external command</tt> <br><br>
+Cause: cygwin is not installed properly/Windows does not know where it is.<br>  <br><br>
+<u>Solution</u>:  <br><br>
+
+a) Check your Path (see no. 2 <a href="#Win-Win">above</a>).  Make sure there are no spaces in the Path sequence.  You could also try the alternative ordering <br><br>  
+
+<tt>C:\Perl\bin\;[other stuff - DO NOT REMOVE];C:\mingwin\bin;C:\cygwin;</tt><br><br>
+
+Exit from the Command Prompt and open it again to get the Path to take effect.  Try building again.<br><br>
+or<br>
+
+b) Try taking an axe to your computer : this stuff is tempramental.<br><br>
+<br>
+<B>--2--</B><BR>
+<u>Problem</u>:  Can't build chm files. <br><br>
+Cause: does not know where <tt>hhc.exe</tt> is.<br><br><br>  
+<u>Solution</u>: <br><br>
+
+a)Put <tt>hhc.exe</tt> in the <tt>cygwin</tt> directory. <br><br> 
+or<br>
+b)  Install the whole <i>hhw</i> program <a href="htmlhelp.exe">[hhw]</a>.  Try adding <i>hhw</i> to your Path as well (??) (see no. 2 <a href="#Win-Win">above</a>).<br><br>
+or<br>
+c) Go into <tt>R\src\gnuwin32\</tt> and check that the path for <i>hhw</i> is correct in the <i>configuration macros</i> section of <tt>Mkrules</tt>.  Alternatively, ask for the help files not to be built. You are supposed to be able to turn off the html help option, by editing the <i>help</i> section at the start of <tt>MkRules</tt>.  WARNING: any editing I do in this file is simply ignored, so this is unlikely to work and is really clutching at straws.  <br><br><br>   
+
+<B>--3--</B><BR>
+<u>Problem</u>:  
+<blockquote> 
+<tt>preparing package roots for lazy loading<br>
+Error in tools:::.read_description(file) :<br>
+        file '/DESCRIPTION' does not exist<br>
+Execution halted<br>
+make: *** [lazyload] Error 1<br>
+*** Installation of roots failed ***</tt> 
+</blockquote>
+
+Cause: Lazy loading is not working properly (though i am not really sure what that is).<br><br><br>
+<u>Solution</u>:  <br><br>
+
+a) This happens with windows to windows (binary) builds, but is not likely to happen with something as simple as <I> roots</I>.  However, in the Command prompt, try doing your build command with <i>forward</i> slashes and not backslashes, i.e.
+<br><br>
+<tt>C:\rw2000\bin>Rcmd build --force --binary C:/packages/roots<br><br></tt>
+
+instead of<br><br>
+
+<tt>C:\rw2000\bin>Rcmd build --force --binary C:\packages\roots<br><br></tt>
+
+By the way, i don't think normal tar (non-binary) builds will work with forward slashes.<br><br> 
+or<br>
+b) go into the <tt>bin</tt> directory of the version of R which you use to build packages.  Then open the <tt>build</tt> file with a text editor.  At about line 65 of the file, where it says<br>
+<blockquote>
+<tt>if($WINDOWS) {<br>
+    die "Please set TMPDIR to a valid temporary directory\n"<br>
+	unless (-e ${R::Vars::TMPDIR});<br>
+    @known_options = ("help|h", ...<br></tt>
+</blockquote>
+add <tt>"no-lazy"</tt> to the list of <tt>known_options</tt> (within the parentheses).  Then under <tt>my $INSTALL_opts</tt> (at about line 90), where it says <tt>if($WINDOWS) {</tt>, add the line<br><br>
+ 
+<tt>$INSTALL_opts .= " --no-lazy" if $opt_no_lazy;</tt><br><br>
+
+to the others, <tt>docs</tt> and <tt>auto-zip</tt>.  Save the file.  Basically, this will add an option to the <tt>Rcmd build</tt>, taken from the options of <tt>Rcmd INSTALL</tt> to remove the lazy building in the build procedure.  So in other words, when binary building you can now write<br><br>
+
+<tt>C:\rw2000\bin>Rcmd build --force --binary --no-lazy C:\packages\roots</tt>.<br><br><br>
+
+<B>--4--</B><BR>
+<u>Problem</u>:  
+<blockquote>
+<tt> * checking for working latex ...
+Error: environment variable TMPDIR not set (or set to unusable value) and no
+default available</tt>
+</blockquote>
+
+Cause:  Well, it tells you:  it wants the location of the windows temporary directory, though this should be set up already.  (We have encountered this on Windows XP).<BR><BR><BR>
+<u>Solution</u><BR><BR>
+
+In dos, use:<br><br>
+<tt>set TMPDIR=c:\Windows\temp</tt><br><br>
+
+where <tt>temp</tt> is your Windows temporary directory, or make up a location.<BR><BR><BR>
+
+<B>--5--</B><BR>
+<u>Problem</u>:  
+<blockquote>
+<tt>Found the following C sources/headers with CRLF line endings:
+  src/fifrt.c
+ISO C requires LF line endings.</tt>
+</blockquote>
+
+Cause:  This is a difference between line endings in text files on different OS systems, and this problem occurs when sharing text files across multiple OS.  (We encountered this problem when using Windows XP).<BR><BR><BR>
+
+<u>Solution</u>:<BR><BR>
+You need to convert the relevant C files. For converting them in Windows, software can be found at:
+<a href="http://www.bastet.com/">http://www.bastet.com/</a>.<BR><BR>
+
+Download UDDU and follow the instructions.  Regardless of the OS, you need to use the <tt>DOS2UNIX <file> </tt> command.  This seems to do the trick.  By the sounds of it the <tt>DOS2UNIX</tt> command comes with Unix as standard.<BR><BR><BR>
+
+<P ALIGN="center" hspace="10"><A HREF="#top">[top]</a></P>
+<br>
+<font color="A52A2A">
+<a name="Thanks"></a>
+
+<font size="+3">Thanks...</font size>
+</font><BR><BR>
+
+<font color="0099CC">Many thanks to the following people (most of whom have suffered for this cause) for their useful help, comments, and questions about this page:</font><br><br>
+
+<font color="orange">
+  Dan Bailey <FONT SIZE="-1">[bristol.ac.uk]</FONT>
+, Patrick Brandt <FONT SIZE="-1">[unt.edu]</FONT>
+, Nick Drew
+, Derek Ogle <FONT SIZE="-1">[northland.edu]</FONT>
+, John Kuhling
+, Marina Knight <FONT SIZE="-1">[bristol.ac.uk]</FONT>
+, Bernard Silverman <FONT SIZE="-1">[ox.ac.uk]</FONT>
+, Joe Zhang<FONT SIZE="-1">[umanitoba.ca]</FONT>
+
+
+</font> <BR><BR>
+</blockquote>
+</FONT>
+
+</BODY>
+
+</HTML>
+ 
